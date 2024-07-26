@@ -1,5 +1,7 @@
 <script lang="ts">
+	import Subtitle from '$lib/components/Subtitle.svelte';
 	import Chart from 'chart.js/auto';
+	import Profile from './_Profile.svelte';
 	import { onMount } from 'svelte';
 
 	interface Observacao {
@@ -36,6 +38,18 @@
 		conducao: 9,
 		dominio: 7
 	};
+
+	const observacoes: Observacao[] = [
+		{
+			observacao: 'This is the first observation',
+			data: new Date('2022-01-01')
+		},
+		{
+			observacao: 'This is the second observation',
+			data: new Date('2022-01-02')
+		}
+		// Add more observations as needed
+	];
 
 	function getColor(value: number): string {
 		if (value >= 0 && value <= 3) {
@@ -90,19 +104,20 @@
 	});
 </script>
 
-<div class="bg-neutral-200 overflow-auto p-2 mx-12">
-	<div class="justify-center bg-white grid grid-cols-3 border-2 border-indigo-400">
-		<div class="absolute top-0 left-10 mx-8 my-8 bg-slate-200">
-			<!-- The code you want to place at the right up corner here -->
-			<button
-				class="bg-grey-light shadow-md hover:bg-cyan-300/70 bg-cyan-400/70 text-grey-darkest font-bold py-2 px-4 rounded inline-flex items-center"
+<div class="bg-neutral-200 self-center justify-self-center border-2 border-indigo-600 p-2 mx-12">
+	<div class="w-full">
+		<Profile />
+	</div>
+	<div class="justify-center bg-white grid grid-cols-3">
+		<!-- The code you want to place at the right up corner here -->
+		<button
+			class="bg-grey-light h-12 justify-self-end w-40 absolute shadow-md hover:bg-cyan-300/70 bg-cyan-400/70 text-grey-darkest font-bold py-2 px-4 rounded inline-flex items-center"
+		>
+			<svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+				><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg
 			>
-				<svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-					><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg
-				>
-				<span>Ver Historico</span>
-			</button>
-		</div>
+			<span>Ver Historico</span>
+		</button>
 
 		<div class="col-span-2 content-center grid place align-middle">
 			<div
@@ -111,7 +126,7 @@
 				<div class="px-6 py-4 border-0">
 					<div class="flex flex-wrap items-center">
 						<div class="relative w-full max-w-full flex-grow flex-1">
-							<h3 class="font-bold text-lg text-blueGray-700">AVALIAÇÃO</h3>
+							<Subtitle title={'Avaliação'} />
 						</div>
 					</div>
 				</div>
@@ -275,100 +290,32 @@
 		</div>
 	</div>
 
-	<div class="flex-1 bg-white rounded-lg shadow-xl mt-4 p-8">
+	<div class="justify-center bg-white grid grid-cols-1 flex-1 bg-white rounded-lg shadow-xl mt-4">
 		<button
-			class="bg-grey-light shadow-md hover:bg-cyan-300/70 bg-cyan-400/70 text-grey-darkest font-bold py-2 px-4 rounded inline-flex items-center"
+			class="bg-grey-light h-12 justify-self-end w-40 absolute shadow-md hover:bg-cyan-300/70 bg-cyan-400/70 text-grey-darkest font-bold py-2 px-4 rounded inline-flex items-center"
 		>
 			<svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
 				><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg
 			>
 			<span>ADICIONAR</span>
 		</button>
-		<h4 class="text-4xl text-gray-900 font-bold font-sans">OBSERVAÇÕES</h4>
 
-		<div class="relative px-4">
+		<div class="relative p-4">
+			<Subtitle title={'Observações'} />
 			<div class="absolute h-full border border-dashed border-opacity-20 border-secondary"></div>
 
 			<!-- start::Timeline item -->
-			<div class="flex items-center w-full my-6 -ml-1.5">
-				<div class="w-1/12 z-10">
-					<div class="w-3.5 h-3.5 bg-blue-600 rounded-full"></div>
+			{#each observacoes as observacao}
+				<div class="flex items-center w-full my-6 -ml-1.5">
+					<div class="w-1/12 z-10">
+						<div class="w-3.5 h-3.5 bg-blue-600 rounded-full"></div>
+					</div>
+					<div class="w-11/12">
+						<p class="text-sm">{observacao.observacao}</p>
+						<p class="text-xs text-gray-500">{observacao.data.toLocaleDateString('en-GB')}</p>
+					</div>
 				</div>
-				<div class="w-11/12">
-					<p class="text-sm">Profile informations changed.</p>
-					<p class="text-xs text-gray-500">3 min ago</p>
-				</div>
-			</div>
-			<!-- end::Timeline item -->
-
-			<!-- start::Timeline item -->
-			<div class="flex items-center w-full my-6 -ml-1.5">
-				<div class="w-1/12 z-10">
-					<div class="w-3.5 h-3.5 bg-blue-600 rounded-full"></div>
-				</div>
-				<div class="w-11/12">
-					<p class="text-sm">
-						Connected with <a href="#" class="text-blue-600 font-bold">Colby Covington</a>.
-					</p>
-					<p class="text-xs text-gray-500">15 min ago</p>
-				</div>
-			</div>
-			<!-- end::Timeline item -->
-
-			<!-- start::Timeline item -->
-			<div class="flex items-center w-full my-6 -ml-1.5">
-				<div class="w-1/12 z-10">
-					<div class="w-3.5 h-3.5 bg-blue-600 rounded-full"></div>
-				</div>
-				<div class="w-11/12">
-					<p class="text-sm">
-						Invoice <a href="#" class="text-blue-600 font-bold">#4563</a> was created.
-					</p>
-					<p class="text-xs text-gray-500">57 min ago</p>
-				</div>
-			</div>
-			<!-- end::Timeline item -->
-
-			<!-- start::Timeline item -->
-			<div class="flex items-center w-full my-6 -ml-1.5">
-				<div class="w-1/12 z-10">
-					<div class="w-3.5 h-3.5 bg-blue-600 rounded-full"></div>
-				</div>
-				<div class="w-11/12">
-					<p class="text-sm">
-						Message received from <a href="#" class="text-blue-600 font-bold">Cecilia Hendric</a>.
-					</p>
-					<p class="text-xs text-gray-500">1 hour ago</p>
-				</div>
-			</div>
-			<!-- end::Timeline item -->
-
-			<!-- start::Timeline item -->
-			<div class="flex items-center w-full my-6 -ml-1.5">
-				<div class="w-1/12 z-10">
-					<div class="w-3.5 h-3.5 bg-blue-600 rounded-full"></div>
-				</div>
-				<div class="w-11/12">
-					<p class="text-sm">
-						New order received <a href="#" class="text-blue-600 font-bold">#OR9653</a>.
-					</p>
-					<p class="text-xs text-gray-500">2 hours ago</p>
-				</div>
-			</div>
-			<!-- end::Timeline item -->
-
-			<!-- start::Timeline item -->
-			<div class="flex items-center w-full my-6 -ml-1.5">
-				<div class="w-1/12 z-10">
-					<div class="w-3.5 h-3.5 bg-blue-600 rounded-full"></div>
-				</div>
-				<div class="w-11/12">
-					<p class="text-sm">
-						Message received from <a href="#" class="text-blue-600 font-bold">Jane Stillman</a>.
-					</p>
-					<p class="text-xs text-gray-500">2 hours ago</p>
-				</div>
-			</div>
+			{/each}
 			<!-- end::Timeline item -->
 		</div>
 	</div>
