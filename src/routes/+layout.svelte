@@ -2,4 +2,6 @@
 	import '../app.css';
 </script>
 
-<slot />
+<div class="bg-neutral-200">
+	<slot />
+</div>
